@@ -1,18 +1,47 @@
 import Seo from '../components/seo'
 import Movie from "../interfaces/movieAPI.interface";
 import axios from "axios";
+import Link from "next/link";
+import {useRouter} from "next/router";
 
+// navigating -> router hook
 
 export default function Home({results}: any) {
+  console.log(results)
+  const router = useRouter();
+  const onClick = (id: number, title: string) => {
+    router.push({
+        // push - url 을 string 으로 보낼 수도 있지만 객체로도 보낼 수 가 있다.
+        pathname: `/movies/${id}`,
+        query: { // url 에다가 정보를 담아 보낼 수 있다.
+          title: `${title}`,
+        }
+      },
+      `/movies/${id}`); // as 를 이용해서 보이는 url 을 따로 마스킹을 할 수 있다.
+  }
 
   return (
     <div className="container">
       <Seo title="Home"/>
+
       {results.map((movie: Movie) => (
-        <div className="movie" key={movie.id}>
+
+        <div className="movie" key={movie.id} onClick={() => onClick(movie.id, movie.original_title)}>
           <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt={movie.original_title}/>
-          <h4>{movie.original_title}</h4>
+          <Link href={{
+            pathname: `/movies/${movie.id}`,
+            query: { // url 에다가 정보를 담아 보낼 수 있다.
+              title: `${movie.original_title}`,
+            }
+          }} as={`/movies/${movie.id}`}>
+
+            {/* a (link) 태그는  div 를 감싸는 태그가 아닌 그 이전으로 들어가야 하기때문에  text 관련 태그만만 묶어주는게 좋다. */}
+            <a>
+              <h4>{movie.original_title}</h4>
+            </a>
+          </Link>
         </div>
+
       ))}
 
       <style jsx>{`
@@ -22,9 +51,11 @@ export default function Home({results}: any) {
           padding: 20px;
           gap: 20px;
         }
-        .movie{
-        cursor: pointer;
+
+        .movie {
+          cursor: pointer;
         }
+
         .movie img {
           max-width: 100%;
           border-radius: 12px;
@@ -32,14 +63,13 @@ export default function Home({results}: any) {
           box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
         }
 
-        .movie img:hover {
+        .movie:hover img {
           transform: scale(1.05) translateY(-10px);
         }
 
         .movie h4 {
           font-size: 18px;
           text-align: center;
-          cursor:default ;
         }
       `}</style>
     </div>
