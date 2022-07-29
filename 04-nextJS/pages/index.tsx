@@ -3,10 +3,11 @@ import Movie from "../interfaces/movieAPI.interface";
 import axios from "axios";
 import Link from "next/link";
 import {useRouter} from "next/router";
+import { GetServerSideProps , InferGetServerSidePropsType } from 'next'
 
 // navigating -> router hook
 
-export default function Home({results}: any) {
+export default function Home({results}: InferGetServerSidePropsType< typeof getServerSideProps>) {
   console.log(results)
   const router = useRouter();
   const onClick = (id: number, title: string) => {
@@ -67,7 +68,7 @@ export default function Home({results}: any) {
 //getServerSideProps // 서버사이드렌더링에서만 실행
 //요청에 따라 페이지가 데이터를 계속 업데이트해야는 상황에 사용
 // 함수이름을 바꿀 수 없다. / 안에 어떤 코드를 쓰던 server 에서만 돌아간다. ( 백엔드 에서만 돌아감 )
-export const getServerSideProps = async () => {
+export const getServerSideProps  : GetServerSideProps = async () => {
   // const {results} = await (await fetch(`http://localhost:3000/api/movies`)).json(); // absolute URL만 가능
   const results = await axios.get('http://localhost:3000/api/movies')
     .then((response) => response.data.results)

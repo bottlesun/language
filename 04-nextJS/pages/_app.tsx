@@ -1,5 +1,4 @@
 import type {AppProps} from 'next/app'
-import {mainColor} from "../styles/variables";
 import '../styles/globals.css';
 import Layout from "./layout";
 
