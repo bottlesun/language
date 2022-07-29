@@ -10,15 +10,8 @@ export default function Home({results}: any) {
   console.log(results)
   const router = useRouter();
   const onClick = (id: number, title: string) => {
-    router.push({
-        // push - url 을 string 으로 보낼 수도 있지만 객체로도 보낼 수 가 있다.
-        pathname: `/movies/${id}`,
-        query: { // url 에다가 정보를 담아 보낼 수 있다.
-          title: `${title}`,
-        }
-      },
-      `/movies/${id}`); // as 를 이용해서 보이는 url 을 따로 마스킹을 할 수 있다.
-  }
+    router.push(`/movies/${title}/${id}`);
+  };
 
   return (
     <div className="container">
@@ -28,12 +21,7 @@ export default function Home({results}: any) {
 
         <div className="movie" key={movie.id} onClick={() => onClick(movie.id, movie.original_title)}>
           <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt={movie.original_title}/>
-          <Link href={{
-            pathname: `/movies/${movie.id}`,
-            query: { // url 에다가 정보를 담아 보낼 수 있다.
-              title: `${movie.original_title}`,
-            }
-          }} as={`/movies/${movie.id}`}>
+          <Link href={`/movies/${movie.original_title}/${movie.id}`}>
 
             {/* a (link) 태그는  div 를 감싸는 태그가 아닌 그 이전으로 들어가야 하기때문에  text 관련 태그만만 묶어주는게 좋다. */}
             <a>
