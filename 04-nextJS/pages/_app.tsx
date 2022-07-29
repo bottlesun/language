@@ -18,7 +18,7 @@ export default function App({Component, pageProps}: AppProps) {
       <style jsx global>{` // next.js 내장 기능으로 style 태그를 사용 하면 css 적용.
       // global 해당 컴포넌트 하위 요소들에게 까지 css 적용.
       a {
-        color: ${mainColor};
+        color: #333;
       }
       `}</style>
     </Layout>

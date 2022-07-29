@@ -10,24 +10,16 @@ export default function NavBar() {
   const router = useRouter();
 
   return (
-    <nav>
-      <Link href="/">
-        <a className={`link , ${router.pathname === "/" ? "active" : ''}`}>Home</a>
-      </Link>
-      <Link href="/about">
-        <a className={['link', router.pathname === "/about" ? "active" : ''].join(" ")}>About</a>
-      </Link>
-      <style jsx>{`
-
-        a {
-          text-decoration: none;
-          font-weight: bold;
-        }
-
-        .active {
-          color: tomato;
-        }
-      `}</style>
-    </nav>
+    <Nav>
+      <img src="/vercel.svg"  alt="logo" />
+      <div>
+        <Link href="/">
+          <a className={`link , ${router.pathname === "/" ? "active" : ''}`}>Home</a>
+        </Link>
+        <Link href="/about">
+          <a className={['link', router.pathname === "/about" ? "active" : ''].join(" ")}>About</a>
+        </Link>
+      </div>
+    </Nav>
   )
 }
