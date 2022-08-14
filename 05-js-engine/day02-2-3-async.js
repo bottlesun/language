@@ -58,8 +58,3 @@ Promise.resolve().then(() => {
   // p 가 먼저 실행 된다.
   console.log('p')
 });
-
-
-const p = new Promise((resolve, reject) => {
-
-});
