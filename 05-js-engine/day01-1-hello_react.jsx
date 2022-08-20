@@ -1,4 +1,4 @@
-import {useㅊAllback} from 'react';
+import {useCallback} from 'react';
 
 export const App = () => {
   const onClick = useCallback((e) => {
