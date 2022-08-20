@@ -27,9 +27,8 @@ function a() {
   console.log(z) // 해당 z는 a 안에서의 z라 TDZ에서 예외
 }
 
-const x = 'x';
+
 y = 'hehe';
 const z = () => {}; // 이 위의 코드는 z 에 대해서는 TDZ가 된다. (같은 스코프 안에서만 적용)
 a();
-
 c();

@@ -16,7 +16,6 @@ function c() { // c -> anonymouse
     c()
   }
 }
-
 function a() { // a -> anonymouse
   const x = 'x';
   console.log('a');
