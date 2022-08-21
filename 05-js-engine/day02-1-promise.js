@@ -6,7 +6,7 @@ setTimeout(() => { // 조건이 달성 되면 바로(강제) 실행
 // 동기 callback
 function calculator(callback, a, b) {
   return callback(a, b)
-};
+}
 calculator(function () {
   return x + y
 }, 3, 5);

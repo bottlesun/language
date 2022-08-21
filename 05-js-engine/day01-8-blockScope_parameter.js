@@ -13,13 +13,13 @@ function a() {
       kkk();
     }
   }
-  // z(); // 호출을 한 상태에서 선언이 되지 않았기 때문에 에러
+  z();
 }
 
 a();
 const z = (a, b) => {return a + b}; // TDZ
 z(3, 5) // 8
-// function z( ) or var z 의 경우 호이스팅이 되기때문에 최 상단으로 올라간다. const let 은 안됨
+// function z( ) or var z 의 경우 호이스팅이 되기때문에 최상단으로 올라간다. const let 은 안됨
 
 
 /* 블록 스코프 분석 */
