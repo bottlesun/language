@@ -218,7 +218,7 @@ const y = false;
 /* 부분적으로 스코프 사용해보기 */
 function a2() {
   let a = 4;
-  y = true;
+  const y = true;
   if (x) {
     let a = 3;
     for (let i = 0; i < a; i++) {
@@ -229,4 +229,4 @@ function a2() {
     }
   }
 }
-a2();넵
+a2();
