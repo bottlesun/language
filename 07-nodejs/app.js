@@ -7,11 +7,19 @@ const express = require('express');
 const app = express();
 
 // 미들웨어 설정
-app.use((req, res, next) => {
-  console.log('In the middleware!')
-  next() // 이게 있어야 다음 함수도 실행 된다.
+
+app.use('/',(req, res, next) => {
+  console.log('This always runs!')
+  next();
 });
-app.use((req, res, next) => {
+
+app.use('/app-product',(req, res, next) => {
+  console.log('In another middleware!')
+  res.send('<h1>The "Add product" page!</h1>')
+  // next() // 이게 있어야 다음 함수도 실행 된다.
+});
+
+app.use('/',(req, res, next) => {
   console.log('In another middleware!')
   res.send('<h1>Hello from express!</h1>')
 });
