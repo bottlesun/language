@@ -1,25 +1,30 @@
-const path = require("path");
+const path = require('path');
+
 const express = require('express');
 
-const rootDir = require('../util/path')
+const rootDir = require('../util/path');
 
 const router = express.Router();
 
 const products = [];
 
-// use 같은 경우는 모든 요청에 반응하지만,  post get 등으로 미들요청을 걸러서 받을 수 도 있다.
-
-
 // /admin/add-product => GET
-router.get('/add-product', (req, res) => {
-  res.sendFile(path.join(rootDir, 'views', 'add-product.html'))
+router.get('/add-product', (req, res, next) => {
+  res.render('add-product', {
+    pageTitle: 'Add Product',
+    path: '/admin/add-product',
+    formsCSS: true,
+    productCSS: true,
+    activeAddProduct: true
+  });
 });
 
+
 // /admin/add-product => POST
-router.post('/add-product', (req, res) => {
-  products.push({title: req.body.title})
-  res.redirect('/'); // redirect() 경로를 리다이렉트 하여 줍니다.
-})
+router.post('/add-product', (req, res, next) => {
+  products.push({pageTitle: req.body.title});
+  res.redirect('/');
+});
 
 exports.routes = router;
 exports.products = products;

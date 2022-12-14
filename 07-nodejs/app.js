@@ -3,10 +3,27 @@
 const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
-const adminData = require('./routes/admin');
-const shopRoutes = require('./routes/shop');
+const expressHbs = require('express-handlebars');
 
 const app = express();
+
+//.engine() 내장에 등록되있지 않은 템플릿 엔진을 등록한다.
+//layoutsDir - 레이아웃의 기본 url 을 설정하게 해준다.
+app.engine(
+  'hbs',
+  expressHbs({
+    layoutsDir: 'views/layouts/',
+    defaultLayout: 'main-layout',
+    extname: 'hbs'
+  })
+);
+//.set('key','name') name 을  key 값에 있는 서버 동작을 구성, 동작 할 수 있습니다
+app.set('view engine', 'hbs');
+app.set('views', 'views');
+
+
+const adminData = require('./routes/admin');
+const shopRoutes = require('./routes/shop');
 
 // 미들웨어 설정
 
@@ -19,10 +36,8 @@ app.use('/admin', adminData.routes);
 app.use(shopRoutes);
 
 app.use((req, res, next) => {
-  // 마지막만 send 로 끝나면 setHeader 이던 status 던 사용해서 설정이 가능하다.
-  // 더미경로를 만들어 page not found 를 출력하는 것
-  res.status(404).sendfile(path.join(__dirname, 'views', '404.html'));
-})
+  res.status(404).render('404', { pageTitle: 'Page Not Found' });
+});
 
 //listen() 서버를 실행한다.
 //close() 서버를 강제로 종료한다.
