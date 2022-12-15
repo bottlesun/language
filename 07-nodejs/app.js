@@ -1,24 +1,26 @@
 // require() node 에서의 내외장 모듈 정보 가지고 오는 기능
 // express 패키지
-const path = require('path');
+//const expressHbs = require('express-handlebars');
+
 const express = require('express');
 const bodyParser = require('body-parser');
-const expressHbs = require('express-handlebars');
+const {get404Errors} = require('./controllers/error')
+const path = require('path');
 
 const app = express();
 
 //.engine() 내장에 등록되있지 않은 템플릿 엔진을 등록한다.
 //layoutsDir - 레이아웃의 기본 url 을 설정하게 해준다.
-app.engine(
-  'hbs',
-  expressHbs({
-    layoutsDir: 'views/layouts/',
-    defaultLayout: 'main-layout',
-    extname: 'hbs'
-  })
-);
+// app.engine(
+//   'hbs',
+//   expressHbs({
+//     layoutsDir: 'views/layouts/',
+//     defaultLayout: 'main-layout',
+//     extname: 'hbs'
+//   })
+// );
 //.set('key','name') name 을  key 값에 있는 서버 동작을 구성, 동작 할 수 있습니다
-app.set('view engine', 'hbs');
+app.set('view engine', 'ejs');
 app.set('views', 'views');
 
 
@@ -32,12 +34,10 @@ app.use(bodyParser.urlencoded({extended: false}));
 // express.static() 읽기전용으로 직접 경로 액세스를 허용해준다.
 app.use(express.static(path.join(__dirname, 'public')));
 // routes 폴더에서 불러 옴
-app.use('/admin', adminData.routes);
+app.use('/admin', adminData);
 app.use(shopRoutes);
 
-app.use((req, res, next) => {
-  res.status(404).render('404', { pageTitle: 'Page Not Found' });
-});
+app.use(get404Errors);
 
 //listen() 서버를 실행한다.
 //close() 서버를 강제로 종료한다.
