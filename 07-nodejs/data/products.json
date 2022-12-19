@@ -1,1 +1,1 @@
-[{"title":"This is test Book","imageUrl":"https://cdn.pixabay.com/photo/2016/03/31/20/51/book-1296045_960_720.png","description":"this is awesome book!!","price":"19.99"}]
+[{"id":"12345","title":"This is test Book","imageUrl":"https://via.placeholder.com/500","description":"this is awesome book!!","price":"19.99"},{"title":"Anther Product","imageUrl":"https://via.placeholder.com/500","description":"Anther very amazing Product!!","price":"30.99","id":"0.7038234598186537"}]

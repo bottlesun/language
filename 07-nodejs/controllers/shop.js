@@ -1,6 +1,6 @@
 //controllers
 const Product = require('../models/product')
-
+const Cart = require('../models/cart')
 
 // shop
 exports.getShopProducts = (req, res, next) => {
@@ -9,9 +9,6 @@ exports.getShopProducts = (req, res, next) => {
       prods: products,
       pageTitle: 'Shop',
       path: '/',
-      hasProducts: products.length > 0,
-      activeShop: true,
-      productCSS: true
     });
   });
 };
@@ -20,11 +17,19 @@ exports.getProducts = (req, res, next) => {
   Product.fetchAll((products) => {
     res.render('shop/product-list', {
       prods: products,
-      pageTitle: 'Shop',
+      pageTitle: 'All Products',
       path: '/products',
-      hasProducts: products.length > 0,
-      activeShop: true,
-      productCSS: true
+    });
+  });
+};
+
+exports.getProduct = (req, res, next) => {
+  const prodId = req.params.productId;
+  Product.findById(prodId, product => {
+    res.render('shop/product-detail', {
+      product: product,
+      pageTitle: product.title + ' | shop',
+      path: '/products'
     });
   });
 };
@@ -36,12 +41,17 @@ exports.getCartProducts = (req, res, next) => {
       prods: products,
       pageTitle: 'cart | Shop',
       path: '/cart',
-      hasProducts: products.length > 0,
-      activeShop: true,
-      productCSS: true
     });
   });
 };
+
+exports.postCartProducts = (req, res, next) => {
+  const prodId = req.body.productId;
+  Product.findById(prodId,(product) => {
+    Cart.addProduct(prodId, product.price);
+  })
+  res.redirect('/cart');
+}
 
 exports.getOrdersProducts = (req, res, next) => {
   Product.fetchAll((products) => {
@@ -49,9 +59,6 @@ exports.getOrdersProducts = (req, res, next) => {
       prods: products,
       pageTitle: 'orders | Shop',
       path: '/orders',
-      hasProducts: products.length > 0,
-      activeShop: true,
-      productCSS: true
     });
   });
 };
@@ -63,9 +70,6 @@ exports.getCheckOutProducts = (req, res, next) => {
       prods: products,
       pageTitle: 'checkout | Shop',
       path: '/checkout',
-      hasProducts: products.length > 0,
-      activeShop: true,
-      productCSS: true
     });
   });
 };

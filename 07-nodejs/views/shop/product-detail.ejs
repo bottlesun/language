@@ -1,9 +1,19 @@
-<%- include('../includes/head') %>
+<%- include('../includes/head.ejs') %>
 </head>
 
 <body>
-<%- include('../includes/navigation') %>
-<main>
-    <p>detail</p>
+<%- include('../includes/navigation.ejs') %>
+<main class="centered">
+    <h1><%= product.title %></h1>
+    <hr/>
+    <div>
+        <img src="<%= product.imageUrl %>" alt="<%= product.title %>">
+    </div>
+
+    <h2><%= product.price %></h2>
+    <h2><%= product.description %></h2>
+
+    <%- include('../includes/add-top-cart.ejs', {product : product}) %>
+
 </main>
-<%- include('../includes/end') %>
+<%- include('../includes/end.ejs') %>
