@@ -4,12 +4,13 @@
   "main": "server/index.js",
   "scripts": {
     "backend": "nodemon server/index.js",
-    "dev": "nodemon server/index.js"
+    "dev": "concurrently -r -k \"npm run backend\" \"npm start --prefix client\""
   },
   "author": "",
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "concurrently": "^7.6.0",
     "nodemon": "^2.0.20"
   },
   "dependencies": {
