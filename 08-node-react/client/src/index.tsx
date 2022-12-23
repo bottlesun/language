@@ -16,7 +16,7 @@ const creatStoreWithMiddleware = applyMiddleware(promiseMiddleware, reduxThunk)(
 // 글로벌로 compose type 설정
 declare global {
   interface Window {
-    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: any;
   }
 }
 
