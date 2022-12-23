@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, {useEffect} from 'react';
+import './landingPage.css';
 
 const LandingPage = () => {
   useEffect(() => {
@@ -7,8 +8,8 @@ const LandingPage = () => {
       .then(response => console.log(response));
   }, [])
   return (
-    <div>
-      Landing Page
+    <div className={'wrap'}>
+      <h2>시작페이지</h2>
     </div>
   );
 };
