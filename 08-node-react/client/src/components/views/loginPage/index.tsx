@@ -1,44 +1,42 @@
-import {response} from "express";
-import React, {ChangeEvent, FormEvent, useCallback, useState} from 'react';
-import './loginPage.css';
-import useInput from "../../../hooks/useInput";
-import {useDispatch} from 'react-redux';
+import React, {FormEvent} from 'react'
+import {useDispatch} from "react-redux";
+import {useNavigate} from 'react-router-dom';
 import {loginUser} from "../../../_actions/user_actions";
-import {combineReducers} from 'redux'
-
-const rootReducer = combineReducers({})
-export type RootState = ReturnType<typeof rootReducer>
+import Auth from "../../../hoc/auth";
+import useInput from "../../../hooks/useInput";
+import './loginPage.css';
 
 const LoginPage = (props: any) => {
+  const navigate = useNavigate();
+
   const {onChange, inputs} = useInput({Email: '', Password: ''});
   const {Email, Password} = inputs;
-
   const dispatch = useDispatch() as any;
 
+  const onSubmitHandler = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
 
-  const onsubmitHandler = useCallback((e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log('Email', Email);
-    console.log('Password', Password);
 
     let body = {
       email: Email,
       password: Password
     }
-    // redux - useDispatch 를 이용해서 action 을 할 수 있다.
-    dispatch(loginUser(body)).then((response: any) => {
-      if (response.payload.loginSuccess) {
-        props.history.push('/')
-      } else {
-        alert('Error')
-      }
-    })
 
-  }, [Email, Password]);
+    dispatch(loginUser(body))
+      .then((response: any) => {
+        console.log(response.payload?.loginSuccess)
+        if (response.payload?.loginSuccess) {
+          navigate('/')
+        } else {
+          alert('Error')
+        }
+      })
+  }
+
 
   return (
     <div className={'wrap'}>
-      <form onSubmit={onsubmitHandler} className={'login-form'}>
+      <form onSubmit={onSubmitHandler} className={'login-form'}>
 
         <label htmlFor="{'input-email'}">Email</label>
         <input type="email" name={'Email'} id={'input-email'} value={Email}
@@ -55,7 +53,7 @@ const LoginPage = (props: any) => {
 
       </form>
     </div>
-  );
-};
+  )
+}
 
-export default LoginPage;
+export default  Auth(LoginPage, false);
