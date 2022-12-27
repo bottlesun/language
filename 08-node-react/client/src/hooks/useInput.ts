@@ -1,6 +1,6 @@
 import {ChangeEvent, useCallback, useState} from 'react';
 
-interface ReturnType<T> {
+export interface ReturnType<T> {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void
   inputs: T
 }
