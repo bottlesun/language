@@ -1,10 +1,22 @@
 import React, {FormEvent} from 'react'
 import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
+import {configureStore} from '@reduxjs/toolkit'
+
 import {registerUser} from "../../../_actions/user_actions";
 import Auth from "../../../hoc/auth";
 import useInput from "../../../hooks/useInput";
 import '../loginPage/loginPage.css';
+
+
+export const store = configureStore({
+  reducer: {
+    dispatch: useDispatch as any
+  }
+});
+
+export type AppDispatch = typeof store.dispatch;
+export const useAppDispatch: () => AppDispatch = useDispatch;
 
 
 const Register = () => {
@@ -12,7 +24,8 @@ const Register = () => {
 
   const {onChange, inputs} = useInput({Email: '', Password: '', Name: '', ConfirmPassword: ''});
   const {Email, Password, Name, ConfirmPassword} = inputs;
-  const dispatch = useDispatch() as any;
+  const dispatch = useAppDispatch() as any
+
 
   const onSubmitHandler = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -35,7 +48,9 @@ const Register = () => {
         } else {
           alert('Failed to sign up!')
         }
-      })
+      }).catch((err: any) => {
+      console.log(err);
+    })
   }
 
   return (
